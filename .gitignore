@@ -1,0 +1,17 @@
+# Pod files
+Podfile.lock
+/Pods/
+
+# Xcode files
+*.xcworkspace
+xcuserdata/
+
+# User-specific files
+*.xcuserstate
+*.xcscmblueprint
+xcschemes/
+
+*.xcuserdatad/
+
+# MacOS system files
+.DS_Store
