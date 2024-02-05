@@ -8,18 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		3EBDC6082B711F05002B9800 /* SwiftUI_UurroosterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */; };
-		3EBDC60A2B711F05002B9800 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6092B711F05002B9800 /* ContentView.swift */; };
 		3EBDC60C2B711F07002B9800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBDC60B2B711F07002B9800 /* Assets.xcassets */; };
 		3EBDC6102B711F07002B9800 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBDC60F2B711F07002B9800 /* Preview Assets.xcassets */; };
+		3EBDC6172B712179002B9800 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6162B712179002B9800 /* ContentView.swift */; };
+		3EBDC6192B7121D5002B9800 /* ScrollViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6182B7121D4002B9800 /* ScrollViewState.swift */; };
+		3EBDC6342B712FB6002B9800 /* InfiniteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6332B712FB6002B9800 /* InfiniteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3EBDC6042B711F05002B9800 /* SwiftUI-Uurrooster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Uurrooster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_UurroosterApp.swift; sourceTree = "<group>"; };
-		3EBDC6092B711F05002B9800 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3EBDC60B2B711F07002B9800 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EBDC60D2B711F07002B9800 /* SwiftUI_Uurrooster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftUI_Uurrooster.entitlements; sourceTree = "<group>"; };
 		3EBDC60F2B711F07002B9800 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3EBDC6162B712179002B9800 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = "../../uurrooster-test/ContentView.swift"; sourceTree = "<group>"; };
+		3EBDC6182B7121D4002B9800 /* ScrollViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewState.swift; sourceTree = "<group>"; };
+		3EBDC6332B712FB6002B9800 /* InfiniteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfiniteView.swift; path = "../../swiftui-uurrooster/SwiftUI-Uurrooster/InfiniteView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +57,12 @@
 			isa = PBXGroup;
 			children = (
 				3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */,
-				3EBDC6092B711F05002B9800 /* ContentView.swift */,
+				3EBDC6162B712179002B9800 /* ContentView.swift */,
+				3EBDC6182B7121D4002B9800 /* ScrollViewState.swift */,
 				3EBDC60B2B711F07002B9800 /* Assets.xcassets */,
 				3EBDC60D2B711F07002B9800 /* SwiftUI_Uurrooster.entitlements */,
 				3EBDC60E2B711F07002B9800 /* Preview Content */,
+				3EBDC6332B712FB6002B9800 /* InfiniteView.swift */,
 			);
 			path = "SwiftUI-Uurrooster";
 			sourceTree = "<group>";
@@ -139,8 +145,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EBDC60A2B711F05002B9800 /* ContentView.swift in Sources */,
 				3EBDC6082B711F05002B9800 /* SwiftUI_UurroosterApp.swift in Sources */,
+				3EBDC6192B7121D5002B9800 /* ScrollViewState.swift in Sources */,
+				3EBDC6342B712FB6002B9800 /* InfiniteView.swift in Sources */,
+				3EBDC6172B712179002B9800 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
