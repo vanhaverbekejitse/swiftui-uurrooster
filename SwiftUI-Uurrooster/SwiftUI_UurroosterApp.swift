@@ -11,7 +11,7 @@ import SwiftUI
 struct SwiftUI_UurroosterApp: App {
     var body: some Scene {
         WindowGroup {
-            InfiniteView()
+            GridView()
         }
     }
 }

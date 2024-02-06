@@ -7,23 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E8A94622B7237E6004FC6EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A94612B7237E6004FC6EC /* ContentView.swift */; };
+		3E8A94672B72394C004FC6EC /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A94662B72394C004FC6EC /* GridView.swift */; };
+		3E8A946B2B723D09004FC6EC /* TimeTableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A946A2B723D09004FC6EC /* TimeTableState.swift */; };
 		3EBDC6082B711F05002B9800 /* SwiftUI_UurroosterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */; };
 		3EBDC60C2B711F07002B9800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBDC60B2B711F07002B9800 /* Assets.xcassets */; };
 		3EBDC6102B711F07002B9800 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBDC60F2B711F07002B9800 /* Preview Assets.xcassets */; };
-		3EBDC6172B712179002B9800 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6162B712179002B9800 /* ContentView.swift */; };
 		3EBDC6192B7121D5002B9800 /* ScrollViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6182B7121D4002B9800 /* ScrollViewState.swift */; };
 		3EBDC6342B712FB6002B9800 /* InfiniteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6332B712FB6002B9800 /* InfiniteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E8A94612B7237E6004FC6EC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3E8A94662B72394C004FC6EC /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		3E8A946A2B723D09004FC6EC /* TimeTableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableState.swift; sourceTree = "<group>"; };
 		3EBDC6042B711F05002B9800 /* SwiftUI-Uurrooster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Uurrooster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_UurroosterApp.swift; sourceTree = "<group>"; };
 		3EBDC60B2B711F07002B9800 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EBDC60D2B711F07002B9800 /* SwiftUI_Uurrooster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftUI_Uurrooster.entitlements; sourceTree = "<group>"; };
 		3EBDC60F2B711F07002B9800 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		3EBDC6162B712179002B9800 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = "../../uurrooster-test/ContentView.swift"; sourceTree = "<group>"; };
 		3EBDC6182B7121D4002B9800 /* ScrollViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewState.swift; sourceTree = "<group>"; };
-		3EBDC6332B712FB6002B9800 /* InfiniteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfiniteView.swift; path = "../../swiftui-uurrooster/SwiftUI-Uurrooster/InfiniteView.swift"; sourceTree = "<group>"; };
+		3EBDC6332B712FB6002B9800 /* InfiniteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +41,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E8A94652B723932004FC6EC /* TestViews */ = {
+			isa = PBXGroup;
+			children = (
+				3EBDC6332B712FB6002B9800 /* InfiniteView.swift */,
+				3E8A94612B7237E6004FC6EC /* ContentView.swift */,
+				3EBDC6182B7121D4002B9800 /* ScrollViewState.swift */,
+				3E8A94662B72394C004FC6EC /* GridView.swift */,
+			);
+			path = TestViews;
+			sourceTree = "<group>";
+		};
 		3EBDC5FB2B711F05002B9800 = {
 			isa = PBXGroup;
 			children = (
@@ -56,13 +71,12 @@
 		3EBDC6062B711F05002B9800 /* SwiftUI-Uurrooster */ = {
 			isa = PBXGroup;
 			children = (
+				3E8A94652B723932004FC6EC /* TestViews */,
 				3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */,
-				3EBDC6162B712179002B9800 /* ContentView.swift */,
-				3EBDC6182B7121D4002B9800 /* ScrollViewState.swift */,
 				3EBDC60B2B711F07002B9800 /* Assets.xcassets */,
 				3EBDC60D2B711F07002B9800 /* SwiftUI_Uurrooster.entitlements */,
 				3EBDC60E2B711F07002B9800 /* Preview Content */,
-				3EBDC6332B712FB6002B9800 /* InfiniteView.swift */,
+				3E8A946A2B723D09004FC6EC /* TimeTableState.swift */,
 			);
 			path = "SwiftUI-Uurrooster";
 			sourceTree = "<group>";
@@ -147,8 +161,10 @@
 			files = (
 				3EBDC6082B711F05002B9800 /* SwiftUI_UurroosterApp.swift in Sources */,
 				3EBDC6192B7121D5002B9800 /* ScrollViewState.swift in Sources */,
+				3E8A94622B7237E6004FC6EC /* ContentView.swift in Sources */,
 				3EBDC6342B712FB6002B9800 /* InfiniteView.swift in Sources */,
-				3EBDC6172B712179002B9800 /* ContentView.swift in Sources */,
+				3E8A94672B72394C004FC6EC /* GridView.swift in Sources */,
+				3E8A946B2B723D09004FC6EC /* TimeTableState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
