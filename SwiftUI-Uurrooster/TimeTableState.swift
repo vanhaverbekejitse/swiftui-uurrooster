@@ -11,16 +11,22 @@ class TimeTableState: Observable {
     var dates: [Date] = []
     var isLoading = false
     let loadingDelay = 0.4
+    let loadedEarlierDaysAmount = 1
+    let loadedLaterDaysAmount = 2
     
     init() {
         dates.append(Date())
-        for _ in 0..<3 {
-            self.addLaterDate()
+        for _ in 0..<loadedEarlierDaysAmount {
+            addLaterDate()
+        }
+        for _ in 0..<loadedLaterDaysAmount {
+            addLaterDate()
         }
     }
     
     func loadLaterDates() {
         if !isLoading {
+            print("LOADED")
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + loadingDelay) {
                 for _ in 0..<1 {

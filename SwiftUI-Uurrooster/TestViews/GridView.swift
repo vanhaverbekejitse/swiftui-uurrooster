@@ -18,15 +18,12 @@ struct GridView: View {
     let cellHeight = 50.0
     let rowHeaderWidth = 50.0
     let columnHeaderHeight = 50.0
+    let padding = 10.0
     
     @State private var offset = CGPoint.zero
     @State private var viewSize = CGSize.zero
     @State private var state = TimeTableState()
-    @State private var isDragging = false
-    
-    private var contentWidth: CGFloat {
-        return rowHeaderWidth + cellWidth * CGFloat(state.dates.count)
-    }
+    @GestureState private var dragOffset = CGFloat.zero
     
     var body: some View {
         GeometryReader { geometry in
@@ -36,7 +33,7 @@ struct GridView: View {
                     Color.clear.frame(width: rowHeaderWidth, height: columnHeaderHeight)
                     ScrollView([.vertical], showsIndicators: false) {
                         rowsHeader
-                            .offset(y: offset.y)
+                            .offset(y: offset.y + cellHeight / 2)
                     }
                     .disabled(true)
                 }
@@ -51,10 +48,10 @@ struct GridView: View {
                         .coordinateSpace(name: "scroll")
                 }
             }
-            .padding()
+            .padding(padding)
             .onAppear() {
-                self.viewSize = geometry.size
-                cellWidth = (self.viewSize.width - self.rowHeaderWidth) / 2
+                viewSize = geometry.size
+                cellWidth = (viewSize.width - rowHeaderWidth - padding * 2) / 2
             }
         }
     }
@@ -66,19 +63,18 @@ struct GridView: View {
                     .foregroundColor(.secondary)
                     .font(.caption)
                     .frame(width: cellWidth, height: columnHeaderHeight)
-                    .border(Color.blue)
+                    .border(Color.gray)
             }
         }
     }
     
     var rowsHeader: some View {
         VStack(alignment: .leading, spacing: 0) {
-            ForEach(0..<rows) { row in
+            ForEach(1..<rows) { row in
                 Text(state.intToHourString(hour: row))
                     .foregroundColor(.secondary)
                     .font(.caption)
                     .frame(width: rowHeaderWidth, height: cellHeight)
-                    .border(Color.blue)
             }
         }
     }
@@ -89,12 +85,12 @@ struct GridView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(0..<rows) { row in
                         HStack(alignment: .top, spacing: 0) {
-                            ForEach(state.dates, id: \.self) { date in
+                            ForEach(state.dates.indices, id: \.self) { index in
                                 // Cell
-                                Text("")
+                                Text("\(row)_\(index)")
                                     .frame(width: cellWidth, height: cellHeight)
-                                    .border(Color.blue)
-                                    .id("\(row)_\(date)")
+                                    .border(Color.gray)
+                                    .id("\(row)_\(index)")
                             }
                         }
                     }
@@ -104,30 +100,31 @@ struct GridView: View {
                         .preference(key: ViewOffsetKey.self, value: geo.frame(in: .named("scroll")).origin)
                 })
                 .onPreferenceChange(ViewOffsetKey.self) { value in
-                    print("\(value.x) \(value.y)")
-                    if value.x <= -268 {
-                        state.loadLaterDates()
-                    }
-                    else if value.x >= -1 {
+                    //print("\(value.x) \(value.y)")
+                    //print("x \(value.x), lower \(0), upper \(cellWidth * -12)")
+                    if value.x >= 0 {
+                        cellProxy.scrollTo("18_2")
                         state.loadEarlierDates()
                     }
+                    else if value.x <= cellWidth * -2 {
+                        cellProxy.scrollTo("18_1")
+                        state.loadLaterDates()
+                    }
                     offset = value
-                    //offset.x = round(value.x / CGFloat(cellWidth)) * CGFloat(cellWidth)
                 }
                 .onAppear {
-                    // HIER VERDERDOEN
-                    cellProxy.scrollTo("0_\(cellHeight * 6)")
+                    //cellProxy.scrollTo("18_2")
                 }
             }
         }
     }
-}
-
-struct ViewOffsetKey: PreferenceKey {
-    typealias Value = CGPoint
-    static var defaultValue = CGPoint.zero
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value.x += nextValue().x
-        value.y += nextValue().y
+    
+    struct ViewOffsetKey: PreferenceKey {
+        typealias Value = CGPoint
+        static var defaultValue = CGPoint.zero
+        static func reduce(value: inout Value, nextValue: () -> Value) {
+            value.x += nextValue().x
+            value.y += nextValue().y
+        }
     }
 }
