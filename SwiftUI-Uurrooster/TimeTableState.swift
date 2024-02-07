@@ -10,9 +10,26 @@ import Foundation
 class TimeTableState: Observable {
     var dates: [Date] = []
     var isLoading = false
-    let loadingDelay = 0.4
+    let loadingDelay = 0.0
     let loadedEarlierDaysAmount = 1
     let loadedLaterDaysAmount = 2
+    
+    let events: [[Event]] = [
+        [
+            Event(startDate: dateFrom(9,5,2023,7,0), endDate: dateFrom(9,5,2023,8,0), title: "Event 1"),
+            Event(startDate: dateFrom(9,5,2023,9,0), endDate: dateFrom(9,5,2023,10,0), title: "Event 2"),
+            Event(startDate: dateFrom(9,5,2023,11,0), endDate: dateFrom(9,5,2023,12,00), title: "Event 3"),
+            Event(startDate: dateFrom(9,5,2023,13,0), endDate: dateFrom(9,5,2023,14,45), title: "Event 4"),
+            Event(startDate: dateFrom(9,5,2023,15,0), endDate: dateFrom(9,5,2023,15,45), title: "Event 5")
+        ],
+        // Add events for other dates as needed
+        [Event(startDate: dateFrom(10,5,2023,7,0), endDate: dateFrom(10,5,2023,8,0), title: "Event 1"),], // Empty array for the second date
+        [Event(startDate: dateFrom(11,5,2023,9,0), endDate: dateFrom(11,5,2023,10,0), title: "Event 2"),
+         Event(startDate: dateFrom(11,5,2023,9,0), endDate: dateFrom(11,5,2023,12,00), title: "Event 3"),],
+        [],
+        [Event(startDate: dateFrom(13,5,2023,13,0), endDate: dateFrom(13,5,2023,14,45), title: "Event 4"),],
+        [Event(startDate: dateFrom(14,5,2023,15,0), endDate: dateFrom(14,5,2023,15,45), title: "Event 5"),]// Empty array for the third date
+    ]
     
     init() {
         dates.append(Date())
@@ -26,7 +43,6 @@ class TimeTableState: Observable {
     
     func loadLaterDates() {
         if !isLoading {
-            print("LOADED")
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + loadingDelay) {
                 for _ in 0..<1 {

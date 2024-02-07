@@ -20,6 +20,8 @@ struct GridView: View {
     let columnHeaderHeight = 50.0
     let padding = 10.0
     
+    @State private var canTrigger = false
+    
     @State private var offset = CGPoint.zero
     @State private var viewSize = CGSize.zero
     @State private var state = TimeTableState()
@@ -82,16 +84,24 @@ struct GridView: View {
     var table: some View {
         ScrollViewReader { cellProxy in
             ScrollView([.vertical, .horizontal], showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(0..<rows) { row in
-                        HStack(alignment: .top, spacing: 0) {
-                            ForEach(state.dates.indices, id: \.self) { index in
-                                // Cell
-                                Text("\(row)_\(index)")
-                                    .frame(width: cellWidth, height: cellHeight)
-                                    .border(Color.gray)
-                                    .id("\(row)_\(index)")
+                HStack(alignment: .top, spacing: 0) {
+                    ForEach(state.dates.indices, id: \.self) { index in
+                        ZStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                ForEach(0..<rows) { row in
+                                    // Cell
+                                    Text("")
+                                        .frame(width: cellWidth, height: cellHeight)
+                                        .border(Color.gray)
+                                        .id("\(row)_\(index)")
+                                }
                             }
+                            HStack(spacing: 0) {
+                                ForEach(state.events.indices.contains(index) ? state.events[index] : []) { event in
+                                    eventCell(event)
+                                }
+                            }
+                            .frame(width: cellWidth)
                         }
                     }
                 }
@@ -101,22 +111,47 @@ struct GridView: View {
                 })
                 .onPreferenceChange(ViewOffsetKey.self) { value in
                     //print("\(value.x) \(value.y)")
-                    //print("x \(value.x), lower \(0), upper \(cellWidth * -12)")
+                    //print("x \(value.x), lower \(0), upper \(cellWidth * -2)")
                     if value.x >= 0 {
-                        cellProxy.scrollTo("18_2")
                         state.loadEarlierDates()
+                        cellProxy.scrollTo("18_2")
                     }
                     else if value.x <= cellWidth * -2 {
-                        cellProxy.scrollTo("18_1")
                         state.loadLaterDates()
+                        cellProxy.scrollTo("18_1")
                     }
                     offset = value
                 }
                 .onAppear {
-                    //cellProxy.scrollTo("18_2")
+                    cellProxy.scrollTo("18_2")
                 }
             }
         }
+    }
+    
+    func eventCell(_ event: Event) -> some View {
+        let duration = event.endDate.timeIntervalSince(event.startDate)
+        let height = duration / 60 / 60 * cellHeight
+
+        let hour = Calendar.current.component(.hour, from: event.startDate)
+        let offset = Double(hour) * (cellHeight) - 12 * cellHeight
+        print(offset)
+
+        return VStack(alignment: .leading) {
+            Text(event.startDate.formatted(.dateTime.hour().minute()))
+            Text(event.title).bold()
+        }
+        .font(.caption)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(4)
+        .frame(height: height, alignment: .top)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.teal)
+                .opacity(0.5)
+        )
+        //.padding(.trailing, 30)
+        .offset(/*x: 30, */y: offset + cellHeight / 2)
     }
     
     struct ViewOffsetKey: PreferenceKey {
