@@ -13,36 +13,25 @@ struct TimeTableView: View {
         UIScrollView.appearance().bounces = false   // Werkt niet voor macOS
     }
     
-    let hours = 24
-    @State var cellWidth = 140.0
-    let cellHeight = 60.0
-    let rowHeaderWidth = 50.0
-    let columnHeaderHeight = 50.0
-    let padding = 10.0
-    
-    @State private var canTrigger = false
-    
-    @State private var offset = CGPoint.zero
-    @State private var viewSize = CGSize.zero
-    @State private var state = TimeTableState()
-    @GestureState private var dragOffset = CGFloat.zero
+    @State private var eventState = TimeTableEventState()
+    @State private var layoutState = TimeTableLayoutState()
     
     var body: some View {
         GeometryReader { geometry in
             HStack(alignment: .top, spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
                     // empty corner
-                    Color.clear.frame(width: rowHeaderWidth, height: columnHeaderHeight)
+                    Color.clear.frame(width: layoutState.rowHeaderWidth, height: layoutState.columnHeaderHeight)
                     ScrollView([.vertical], showsIndicators: false) {
                         rowsHeader
-                            .offset(y: offset.y + cellHeight / 2)
+                            .offset(y: layoutState.getRowsHeaderYOffset())
                     }
                     .disabled(true)
                 }
                 VStack(alignment: .leading, spacing: 0) {
                     ScrollView([.horizontal], showsIndicators: false) {
                         colsHeader
-                            .offset(x: offset.x)
+                            .offset(x: layoutState.offset.x)
                     }
                     .disabled(true)
                     
@@ -50,33 +39,31 @@ struct TimeTableView: View {
                         .coordinateSpace(name: "scroll")
                 }
             }
-            .padding(padding)
+            .padding(layoutState.screenPadding)
             .onAppear() {
-                viewSize = geometry.size
-                cellWidth = (viewSize.width - rowHeaderWidth - padding * 2) / 2
+                layoutState.setCellWidth(screenSize: geometry.size)
             }
         }
     }
     
     var colsHeader: some View {
         HStack(alignment: .top, spacing: 0) {
-            ForEach(state.dates, id: \.self) { date in
+            ForEach(eventState.dates, id: \.self) { date in
                 Text(DateUtils.formatTimeTableDate(date: date))
                     .foregroundColor(.secondary)
                     .font(.caption)
-                    .frame(width: cellWidth, height: columnHeaderHeight)
-                    .border(Color.gray)
+                    .frame(width: layoutState.cellWidth, height: layoutState.columnHeaderHeight)
             }
         }
     }
     
     var rowsHeader: some View {
         VStack(alignment: .leading, spacing: 0) {
-            ForEach(1..<hours) { row in
+            ForEach(1..<layoutState.hours) { row in
                 Text(DateUtils.intToTimetableHour(hour: row))
                     .foregroundColor(.secondary)
                     .font(.caption)
-                    .frame(width: rowHeaderWidth, height: cellHeight)
+                    .frame(width: layoutState.rowHeaderWidth, height: layoutState.cellHeight)
             }
         }
     }
@@ -85,23 +72,25 @@ struct TimeTableView: View {
         ScrollViewReader { cellProxy in
             ScrollView([.vertical, .horizontal], showsIndicators: false) {
                 HStack(alignment: .top, spacing: 0) {
-                    ForEach(state.dates.indices, id: \.self) { index in
+                    ForEach(eventState.dates.indices, id: \.self) { index in
                         ZStack(alignment: .leading) {
                             VStack(alignment: .leading, spacing: 0) {
-                                ForEach(0..<hours) { row in
-                                    // Cell
+                                ForEach(0..<layoutState.hours) { row in
                                     Text("")
-                                        .frame(width: cellWidth, height: cellHeight)
+                                        .frame(width: layoutState.cellWidth, height: layoutState.cellHeight)
                                         .border(Color.gray)
                                         .id("\(row)_\(index)")
                                 }
                             }
-                            HStack(spacing: 0) {
-                                ForEach(state.api.getEventsOnDay(date: state.dates[index])) { event in
-                                    eventCell(event)
-                                }
+                            ForEach(eventState.getEventsWithSize(date: eventState.dates[index])) { event in
+                                eventCell(event)
                             }
-                            .frame(width: cellWidth)
+                            if (DateUtils.isToday(date: eventState.dates[index])) {
+                                Rectangle()
+                                    .fill(Color.black)
+                                    .frame(width: layoutState.cellWidth, height: layoutState.timeIndicatorHeight)
+                                    .offset(y: layoutState.getTimeIndicatorYOffset())
+                            }
                         }
                     }
                 }
@@ -110,17 +99,15 @@ struct TimeTableView: View {
                         .preference(key: ViewOffsetKey.self, value: geo.frame(in: .named("scroll")).origin)
                 })
                 .onPreferenceChange(ViewOffsetKey.self) { value in
-                    //print("\(value.x) \(value.y)")
-                    //print("x \(value.x), lower \(0), upper \(cellWidth * -2)")
                     if value.x >= 0 {
-                        state.loadEarlierDates()
+                        eventState.loadEarlierDates()
                         cellProxy.scrollTo("18_2")
                     }
-                    else if value.x <= cellWidth * -2 {
-                        state.loadLaterDates()
+                    else if value.x <= layoutState.cellWidth * -2 {
+                        eventState.loadLaterDates()
                         cellProxy.scrollTo("18_1")
                     }
-                    offset = value
+                    layoutState.offset = value
                 }
                 .onAppear {
                     cellProxy.scrollTo("18_2")
@@ -129,24 +116,27 @@ struct TimeTableView: View {
         }
     }
     
-    func eventCell(_ event: Event) -> some View {
-        let eventHeight = DateUtils.getEventDuration(event: event) / 60 / 60 * cellHeight
-        // -12 want offset y=0 is in het midden
-        var eventOffset = (DateUtils.getEventStartTimeInHours(event: event) - 12) * (cellHeight) + (eventHeight / 2)
-
+    func eventCell(_ event: EventForCell) -> some View {
+        let eventHeight =  layoutState.getEventHeight(event: event)
+        let eventWidth = layoutState.getEventWidth(event: event)
+        
+        let eventYOffset = layoutState.getEventYOffset(event: event)
+        let eventXOffset = layoutState.getEventXOffset(event: event)
+        
         return VStack(alignment: .leading) {
-            Text(DateUtils.getEventCellTime(event: event))
-            Text(event.title).bold()
+            Text(event.event.title).bold().foregroundStyle(Color.white)
+            Text(DateUtils.formatEventCellTime(event: event.event)).foregroundStyle(Color.white)
         }
         .font(.caption)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(4)
-        .frame(height: eventHeight, alignment: .top)
+        .frame(width: eventWidth, height: eventHeight, alignment: .top)
         .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.teal)
+            Rectangle()
+                .fill(Color.red)
+                .padding([.bottom, .trailing], 3)
         )
-        .offset(y: eventOffset)
+        .offset(x: eventXOffset, y: eventYOffset)
     }
     
     struct ViewOffsetKey: PreferenceKey {
@@ -157,9 +147,4 @@ struct TimeTableView: View {
             value.y += nextValue().y
         }
     }
-}
-
-
-#Preview {
-    TimeTableView()
 }

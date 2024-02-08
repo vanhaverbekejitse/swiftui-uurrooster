@@ -9,10 +9,11 @@ import Foundation
 
 class MockupEventAPI {
     let events: [Event] = [
-        Event(date: "2024-02-07", startTime: "07:00:00", endTime: "08:00:00", title: "Event 1"),
+        Event(date: "2024-02-07", startTime: "07:00:00", endTime: "09:00:00", title: "Event 1"),
         Event(date: "2024-02-07", startTime: "09:00:00", endTime: "10:00:00", title: "Event 2"),
-        Event(date: "2024-02-07", startTime: "11:00:00", endTime: "12:00:00", title: "Event 3"),
-        Event(date: "2024-02-07", startTime: "13:00:00", endTime: "14:45:00", title: "Event 4"),
+        Event(date: "2024-02-07", startTime: "10:00:00", endTime: "12:00:00", title: "Event 3"),
+        Event(date: "2024-02-07", startTime: "11:15:00", endTime: "14:45:00", title: "Event 4"),
+        Event(date: "2024-02-07", startTime: "12:15:00", endTime: "14:45:00", title: "Event 5"),
         Event(date: "2024-02-08", startTime: "07:30:00", endTime: "08:00:00", title: "Event 1"),
         Event(date: "2024-02-09", startTime: "09:00:00", endTime: "10:00:00", title: "Event 2"),
         Event(date: "2024-02-09", startTime: "09:00:00", endTime: "12:00:00", title: "Event 3"),
@@ -27,6 +28,11 @@ class MockupEventAPI {
     func getEventsOnDay(date: Date) -> [Event] {
         return events.filter { event in
             return event.date == DateUtils.dateToEventDateString(date: date)
+        }.sorted { event1, event2 in
+            if event1.startTime == event2.startTime {
+                return event1.endTime < event2.endTime
+            }
+            return event1.startTime < event2.startTime
         }
     }
 }

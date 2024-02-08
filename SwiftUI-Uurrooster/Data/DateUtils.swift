@@ -37,14 +37,24 @@ class DateUtils {
     
     class func getEventStartTimeInHours(event: Event) -> Double {
         let date = eventTimeStringToDate(str: event.startTime)
-        var hoursTime = Double(Calendar.current.component(.hour, from: date))
-        hoursTime += Double(Calendar.current.component(.minute, from: date)) / 60
-        hoursTime += Double(Calendar.current.component(.minute, from: date)) / 60 / 60
-        //print(String(hoursTime) + " " + event.startTime)
-        return hoursTime
+        return getHours(date: date)
     }
     
-    class func getEventCellTime(event: Event) -> String {
-        return eventTimeStringToDate(str: event.startTime).formatted(.dateTime.hour().minute())
+    class func getHours(date: Date) -> Double {
+        return  Double(Calendar.current.component(.hour, from: date))
+                + Double(Calendar.current.component(.minute, from: date)) / 60
+                + Double(Calendar.current.component(.minute, from: date)) / 60 / 60
+    }
+    
+    class func formatEventCellTime(event: Event) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let startString = dateFormatter.string(from: eventTimeStringToDate(str: event.startTime))
+        let endString = dateFormatter.string(from: eventTimeStringToDate(str: event.endTime))
+        return "(\(startString) - \(endString))"
+    }
+    
+    class func isToday(date: Date) -> Bool {
+        return Calendar.current.startOfDay(for: Date()) == Calendar.current.startOfDay(for: date)
     }
 }

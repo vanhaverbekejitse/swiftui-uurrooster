@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3E8A94622B7237E6004FC6EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A94612B7237E6004FC6EC /* ContentView.swift */; };
-		3E8A946B2B723D09004FC6EC /* TimeTableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A946A2B723D09004FC6EC /* TimeTableState.swift */; };
 		3EB487F82B74C27000F86F20 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB487F72B74C27000F86F20 /* TimeTableView.swift */; };
 		3EB487FA2B74C31300F86F20 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB487F92B74C31300F86F20 /* DateUtils.swift */; };
 		3EB487FC2B74C90D00F86F20 /* MockupEventAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB487FB2B74C90D00F86F20 /* MockupEventAPI.swift */; };
 		3EB487FE2B74C93F00F86F20 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB487FD2B74C93F00F86F20 /* Event.swift */; };
+		3EB488002B75177A00F86F20 /* TimeTableLayoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB487FF2B75177A00F86F20 /* TimeTableLayoutState.swift */; };
+		3EB488022B7517AA00F86F20 /* TimeTableEventState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB488012B7517AA00F86F20 /* TimeTableEventState.swift */; };
 		3EBDC6082B711F05002B9800 /* SwiftUI_UurroosterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */; };
 		3EBDC60C2B711F07002B9800 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBDC60B2B711F07002B9800 /* Assets.xcassets */; };
 		3EBDC6102B711F07002B9800 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EBDC60F2B711F07002B9800 /* Preview Assets.xcassets */; };
@@ -22,11 +23,12 @@
 
 /* Begin PBXFileReference section */
 		3E8A94612B7237E6004FC6EC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		3E8A946A2B723D09004FC6EC /* TimeTableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableState.swift; sourceTree = "<group>"; };
 		3EB487F72B74C27000F86F20 /* TimeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
 		3EB487F92B74C31300F86F20 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		3EB487FB2B74C90D00F86F20 /* MockupEventAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupEventAPI.swift; sourceTree = "<group>"; };
 		3EB487FD2B74C93F00F86F20 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		3EB487FF2B75177A00F86F20 /* TimeTableLayoutState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableLayoutState.swift; sourceTree = "<group>"; };
+		3EB488012B7517AA00F86F20 /* TimeTableEventState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableEventState.swift; sourceTree = "<group>"; };
 		3EBDC6042B711F05002B9800 /* SwiftUI-Uurrooster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Uurrooster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_UurroosterApp.swift; sourceTree = "<group>"; };
 		3EBDC60B2B711F07002B9800 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,6 +59,33 @@
 			path = TestViews;
 			sourceTree = "<group>";
 		};
+		3EB488032B7517BC00F86F20 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				3EB487F92B74C31300F86F20 /* DateUtils.swift */,
+				3EB487FD2B74C93F00F86F20 /* Event.swift */,
+				3EB487FB2B74C90D00F86F20 /* MockupEventAPI.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		3EB488042B7517C200F86F20 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				3EB487FF2B75177A00F86F20 /* TimeTableLayoutState.swift */,
+				3EB488012B7517AA00F86F20 /* TimeTableEventState.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
+		3EB488052B7517D200F86F20 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3EB487F72B74C27000F86F20 /* TimeTableView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3EBDC5FB2B711F05002B9800 = {
 			isa = PBXGroup;
 			children = (
@@ -76,16 +105,14 @@
 		3EBDC6062B711F05002B9800 /* SwiftUI-Uurrooster */ = {
 			isa = PBXGroup;
 			children = (
-				3E8A94652B723932004FC6EC /* TestViews */,
 				3EBDC6072B711F05002B9800 /* SwiftUI_UurroosterApp.swift */,
+				3EB488052B7517D200F86F20 /* Views */,
+				3EB488042B7517C200F86F20 /* States */,
+				3EB488032B7517BC00F86F20 /* Data */,
+				3E8A94652B723932004FC6EC /* TestViews */,
 				3EBDC60B2B711F07002B9800 /* Assets.xcassets */,
 				3EBDC60D2B711F07002B9800 /* SwiftUI_Uurrooster.entitlements */,
 				3EBDC60E2B711F07002B9800 /* Preview Content */,
-				3E8A946A2B723D09004FC6EC /* TimeTableState.swift */,
-				3EB487F72B74C27000F86F20 /* TimeTableView.swift */,
-				3EB487F92B74C31300F86F20 /* DateUtils.swift */,
-				3EB487FB2B74C90D00F86F20 /* MockupEventAPI.swift */,
-				3EB487FD2B74C93F00F86F20 /* Event.swift */,
 			);
 			path = "SwiftUI-Uurrooster";
 			sourceTree = "<group>";
@@ -171,11 +198,12 @@
 				3EBDC6082B711F05002B9800 /* SwiftUI_UurroosterApp.swift in Sources */,
 				3EB487FE2B74C93F00F86F20 /* Event.swift in Sources */,
 				3EB487FA2B74C31300F86F20 /* DateUtils.swift in Sources */,
+				3EB488002B75177A00F86F20 /* TimeTableLayoutState.swift in Sources */,
 				3EB487FC2B74C90D00F86F20 /* MockupEventAPI.swift in Sources */,
 				3EBDC6192B7121D5002B9800 /* ScrollViewState.swift in Sources */,
 				3E8A94622B7237E6004FC6EC /* ContentView.swift in Sources */,
 				3EBDC6342B712FB6002B9800 /* InfiniteView.swift in Sources */,
-				3E8A946B2B723D09004FC6EC /* TimeTableState.swift in Sources */,
+				3EB488022B7517AA00F86F20 /* TimeTableEventState.swift in Sources */,
 				3EB487F82B74C27000F86F20 /* TimeTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
