@@ -7,13 +7,8 @@
 
 import SwiftUI
 
-struct Event: Identifiable {
-    let id = UUID()
-    var startDate: Date
-    var endDate: Date
-    var title: String
-}
-struct ContentView: View {
+
+/*struct ContentView: View {
 
     let dates: [Date] = [
         dateFrom(9, 5, 2023),
@@ -164,3 +159,4 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+*/

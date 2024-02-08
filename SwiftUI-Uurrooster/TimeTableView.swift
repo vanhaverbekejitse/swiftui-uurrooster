@@ -1,21 +1,21 @@
 //
-//  GridView.swift
+//  TimeTableView.swift
 //  SwiftUI-Uurrooster
 //
-//  Created by docent on 06/02/2024.
+//  Created by docent on 08/02/2024.
 //
 
 import SwiftUI
 
-struct GridView: View {
+struct TimeTableView: View {
     
     init() {
-        UIScrollView.appearance().bounces = false
+        UIScrollView.appearance().bounces = false   // Werkt niet voor macOS
     }
     
-    let rows = 24
+    let hours = 24
     @State var cellWidth = 140.0
-    let cellHeight = 50.0
+    let cellHeight = 60.0
     let rowHeaderWidth = 50.0
     let columnHeaderHeight = 50.0
     let padding = 10.0
@@ -61,7 +61,7 @@ struct GridView: View {
     var colsHeader: some View {
         HStack(alignment: .top, spacing: 0) {
             ForEach(state.dates, id: \.self) { date in
-                Text(state.formatDate(date: date))
+                Text(DateUtils.formatTimeTableDate(date: date))
                     .foregroundColor(.secondary)
                     .font(.caption)
                     .frame(width: cellWidth, height: columnHeaderHeight)
@@ -72,8 +72,8 @@ struct GridView: View {
     
     var rowsHeader: some View {
         VStack(alignment: .leading, spacing: 0) {
-            ForEach(1..<rows) { row in
-                Text(state.intToHourString(hour: row))
+            ForEach(1..<hours) { row in
+                Text(DateUtils.intToTimetableHour(hour: row))
                     .foregroundColor(.secondary)
                     .font(.caption)
                     .frame(width: rowHeaderWidth, height: cellHeight)
@@ -88,7 +88,7 @@ struct GridView: View {
                     ForEach(state.dates.indices, id: \.self) { index in
                         ZStack(alignment: .leading) {
                             VStack(alignment: .leading, spacing: 0) {
-                                ForEach(0..<rows) { row in
+                                ForEach(0..<hours) { row in
                                     // Cell
                                     Text("")
                                         .frame(width: cellWidth, height: cellHeight)
@@ -97,7 +97,7 @@ struct GridView: View {
                                 }
                             }
                             HStack(spacing: 0) {
-                                ForEach(state.events.indices.contains(index) ? state.events[index] : []) { event in
+                                ForEach(state.api.getEventsOnDay(date: state.dates[index])) { event in
                                     eventCell(event)
                                 }
                             }
@@ -130,28 +130,23 @@ struct GridView: View {
     }
     
     func eventCell(_ event: Event) -> some View {
-        let duration = event.endDate.timeIntervalSince(event.startDate)
-        let height = duration / 60 / 60 * cellHeight
-
-        let hour = Calendar.current.component(.hour, from: event.startDate)
-        let offset = Double(hour) * (cellHeight) - 12 * cellHeight
-        print(offset)
+        let eventHeight = DateUtils.getEventDuration(event: event) / 60 / 60 * cellHeight
+        // -12 want offset y=0 is in het midden
+        var eventOffset = (DateUtils.getEventStartTimeInHours(event: event) - 12) * (cellHeight) + (eventHeight / 2)
 
         return VStack(alignment: .leading) {
-            Text(event.startDate.formatted(.dateTime.hour().minute()))
+            Text(DateUtils.getEventCellTime(event: event))
             Text(event.title).bold()
         }
         .font(.caption)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(4)
-        .frame(height: height, alignment: .top)
+        .frame(height: eventHeight, alignment: .top)
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color.teal)
-                .opacity(0.5)
         )
-        //.padding(.trailing, 30)
-        .offset(/*x: 30, */y: offset + cellHeight / 2)
+        .offset(y: eventOffset)
     }
     
     struct ViewOffsetKey: PreferenceKey {
@@ -162,4 +157,9 @@ struct GridView: View {
             value.y += nextValue().y
         }
     }
+}
+
+
+#Preview {
+    TimeTableView()
 }
