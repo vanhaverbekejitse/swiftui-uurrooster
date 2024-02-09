@@ -40,7 +40,7 @@ struct TimeTableTableView: View {
                         }
                     }
                     .onAppear {
-                        //cellProxy.scrollTo("7_1", anchor: .topLeading)
+                        //cellProxy.scrollTo("7_2", anchor: .topLeading)
                     }
                 }
                 .background( GeometryReader { geo in
@@ -50,6 +50,7 @@ struct TimeTableTableView: View {
                 .onPreferenceChange(ViewOffsetKey.self) { value in
                     if value.x >= layoutState.getLeftXLoadingOffset() {
                         eventState.loadEarlierDates()
+                        //cellProxy.scrollTo("7_2", anchor: .topLeading)
                     }
                     else if value.x <= layoutState.getRightXLoadingOffset(loadedDaysAmount: eventState.dates.count) {
                         eventState.loadLaterDates()

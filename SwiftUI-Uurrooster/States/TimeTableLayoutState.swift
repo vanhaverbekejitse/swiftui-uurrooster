@@ -25,11 +25,11 @@ class TimeTableLayoutState {
     }
     
     func getLeftXLoadingOffset() -> Double {
-        return 0.0 - cellWidth
+        return 0.0 //- cellWidth
     }
     
     func getRightXLoadingOffset(loadedDaysAmount: Int) -> Double {
-        return cellWidth * (Double(loadedDaysAmount) - 2 - 1) * -1
+        return cellWidth * (Double(loadedDaysAmount) - 2 /*- 1*/) * -1
     }
     
     func getRowsHeaderYOffset() -> Double {
@@ -41,7 +41,7 @@ class TimeTableLayoutState {
     }
     
     func getEventWidth(event: EventLayout) -> Double {
-        return cellWidth / Double(event.simultaniousEventsAmount)
+        return cellWidth / Double(event.overlappingEventsAmount)
     }
     
     func getEventYOffset(event: EventLayout) -> Double {

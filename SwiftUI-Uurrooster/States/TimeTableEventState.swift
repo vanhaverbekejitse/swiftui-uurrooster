@@ -82,7 +82,7 @@ class TimeTableEventState {
                 }
                 overlappingEvents.append(event)
                 event.position = overlappingEvents.count - 1
-                event.simultaniousEventsAmount = overlappingEvents.count
+                event.overlappingEventsAmount = overlappingEvents.count
             }
             else {
                 cellEvents.append(contentsOf: overlappingEvents)
@@ -92,6 +92,55 @@ class TimeTableEventState {
         cellEvents.append(contentsOf: overlappingEvents)
         return cellEvents
     }
+    
+    // NIET AF
+    func getEventsWithBetterSize(date: Date) -> [EventLayout] {
+        let events = api.getEventsOnDay(date: date).map { event in
+            return EventLayout(event: event)
+        }
+        var cellEvents: [EventLayout] = []
+        var bundeledEvents: [EventLayout] = []
+        var overlappingEvents: [EventLayout] = []
+        var bundelWidth = 0
+        for event in events {
+            if (overlappingEvents.contains { overlappingEvent in
+                return event.startTime < overlappingEvent.endTime
+            }) {
+                var i = 0
+                var spotFound = false
+                while i < overlappingEvents.count && !spotFound {
+                    if event.startTime < overlappingEvents[i].endTime {
+                        bundeledEvents.append(overlappingEvents[i])
+                        overlappingEvents.remove(at: i)
+                        event.position = i
+                        spotFound = true
+                    }
+                    i += 1
+                }
+                bundeledEvents.append(event)
+                overlappingEvents.append(event)
+                if !spotFound {
+                    event.position = overlappingEvents.count - 1
+                }
+                if overlappingEvents.count > bundelWidth {
+                    bundelWidth = overlappingEvents.count
+                }
+            }
+            else {
+                for bundeledEvent in bundeledEvents {
+                    bundeledEvent.overlappingEventsAmount = bundelWidth
+                }
+                cellEvents.append(contentsOf: bundeledEvents)
+                overlappingEvents = [event]
+                bundelWidth = 0
+            }
+        }
+        for bundeledEvent in bundeledEvents {
+            bundeledEvent.overlappingEventsAmount = bundelWidth
+        }
+        cellEvents.append(contentsOf: bundeledEvents)
+        return cellEvents
+    }
 }
 
 class EventLayout: Identifiable {
@@ -99,7 +148,7 @@ class EventLayout: Identifiable {
     var startTime: Date
     var endTime: Date
     var position = 0
-    var simultaniousEventsAmount = 1
+    var overlappingEventsAmount = 1
     
     init(event: Event) {
         self.event = event
@@ -108,6 +157,6 @@ class EventLayout: Identifiable {
     }
     
     func incrementSimultaniousEvents() {
-        simultaniousEventsAmount += 1
+        overlappingEventsAmount += 1
     }
 }
