@@ -7,6 +7,7 @@
 
 import Foundation
 
+// regelt de layout voor het uurrooster
 @Observable
 class TimeTableLayoutState {
     let hours = 24
@@ -19,32 +20,36 @@ class TimeTableLayoutState {
     var cellWidth = 140.0
     var offset = CGPoint.zero
     
-    init() {
-        
-    }
-    
     func setCellWidth(screenSize: CGSize) {
         cellWidth = (screenSize.width - rowHeaderWidth - screenPadding * 2) / 2
+    }
+    
+    func getLeftXLoadingOffset() -> Double {
+        return 0.0
+    }
+    
+    func getRightXLoadingOffset() -> Double {
+        return cellWidth * -2
     }
     
     func getRowsHeaderYOffset() -> Double {
         return offset.y + cellHeight / 2
     }
     
-    func getEventHeight(event: EventForCell) -> Double {
+    func getEventHeight(event: EventLayout) -> Double {
         return DateUtils.getEventDuration(event: event.event) / 60 / 60 * cellHeight
     }
     
-    func getEventWidth(event: EventForCell) -> Double {
+    func getEventWidth(event: EventLayout) -> Double {
         return cellWidth / Double(event.simultaniousEventsAmount)
     }
     
-    func getEventYOffset(event: EventForCell) -> Double {
+    func getEventYOffset(event: EventLayout) -> Double {
         // -12 want offset y=0 is in het midden
         return (DateUtils.getEventStartTimeInHours(event: event.event) - 12) * (cellHeight) + (getEventHeight(event: event) / 2)
     }
     
-    func getEventXOffset(event: EventForCell) -> Double {
+    func getEventXOffset(event: EventLayout) -> Double {
         return getEventWidth(event: event) * Double(event.position)
     }
     

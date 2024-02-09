@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Laadt de datums en events voor het uurrooster
 @Observable
 class TimeTableEventState {
     var dates: [Date] = []
@@ -34,7 +35,7 @@ class TimeTableEventState {
             DispatchQueue.main.asyncAfter(deadline: .now() + loadingDelay) {
                 for _ in 0..<1 {
                     self.addLaterDate()
-                    self.dates.removeFirst()
+                    //self.dates.removeFirst()
                 }
                 self.isLoading = false
             }
@@ -47,7 +48,7 @@ class TimeTableEventState {
             DispatchQueue.main.asyncAfter(deadline: .now() + loadingDelay) {
                 for _ in 0..<1 {
                     self.addEarlierDate()
-                    self.dates.removeLast()
+                    //self.dates.removeLast()
                 }
                 self.isLoading = false
             }
@@ -66,15 +67,12 @@ class TimeTableEventState {
         return api.getEventsOnDay(date: date)
     }
     
-    func getEventsWithSize(date: Date) -> [EventForCell] {
+    func getEventsWithSize(date: Date) -> [EventLayout] {
         let events = api.getEventsOnDay(date: date).map { event in
-            return EventForCell(event: event)
+            return EventLayout(event: event)
         }
-        if events.isEmpty {
-            return []
-        }
-        var cellEvents: [EventForCell] = []
-        var overlappingEvents: [EventForCell] = []
+        var cellEvents: [EventLayout] = []
+        var overlappingEvents: [EventLayout] = []
         for event in events {
             if (overlappingEvents.contains { overlappingEvent in
                 return event.startTime < overlappingEvent.endTime
@@ -96,7 +94,7 @@ class TimeTableEventState {
     }
 }
 
-class EventForCell: Identifiable {
+class EventLayout: Identifiable {
     let event: Event
     var startTime: Date
     var endTime: Date

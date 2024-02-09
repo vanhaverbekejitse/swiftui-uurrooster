@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E3887C82B7620B50072D844 /* TimeTableEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3887C72B7620B50072D844 /* TimeTableEventView.swift */; };
+		3E3887CA2B7623080072D844 /* TimeTableColumnHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3887C92B7623080072D844 /* TimeTableColumnHeaderView.swift */; };
+		3E3887CC2B7624460072D844 /* TimeTableRowHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3887CB2B7624460072D844 /* TimeTableRowHeaderView.swift */; };
+		3E3887CE2B7625EC0072D844 /* TimeTableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3887CD2B7625EC0072D844 /* TimeTableTableView.swift */; };
 		3E8A94622B7237E6004FC6EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8A94612B7237E6004FC6EC /* ContentView.swift */; };
 		3EB487F82B74C27000F86F20 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB487F72B74C27000F86F20 /* TimeTableView.swift */; };
 		3EB487FA2B74C31300F86F20 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB487F92B74C31300F86F20 /* DateUtils.swift */; };
@@ -22,6 +26,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E3887C72B7620B50072D844 /* TimeTableEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableEventView.swift; sourceTree = "<group>"; };
+		3E3887C92B7623080072D844 /* TimeTableColumnHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableColumnHeaderView.swift; sourceTree = "<group>"; };
+		3E3887CB2B7624460072D844 /* TimeTableRowHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableRowHeaderView.swift; sourceTree = "<group>"; };
+		3E3887CD2B7625EC0072D844 /* TimeTableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableTableView.swift; sourceTree = "<group>"; };
 		3E8A94612B7237E6004FC6EC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3EB487F72B74C27000F86F20 /* TimeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
 		3EB487F92B74C31300F86F20 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
@@ -62,9 +70,9 @@
 		3EB488032B7517BC00F86F20 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3EB487F92B74C31300F86F20 /* DateUtils.swift */,
 				3EB487FD2B74C93F00F86F20 /* Event.swift */,
 				3EB487FB2B74C90D00F86F20 /* MockupEventAPI.swift */,
+				3EB487F92B74C31300F86F20 /* DateUtils.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -82,6 +90,10 @@
 			isa = PBXGroup;
 			children = (
 				3EB487F72B74C27000F86F20 /* TimeTableView.swift */,
+				3E3887C72B7620B50072D844 /* TimeTableEventView.swift */,
+				3E3887C92B7623080072D844 /* TimeTableColumnHeaderView.swift */,
+				3E3887CB2B7624460072D844 /* TimeTableRowHeaderView.swift */,
+				3E3887CD2B7625EC0072D844 /* TimeTableTableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -197,6 +209,9 @@
 			files = (
 				3EBDC6082B711F05002B9800 /* SwiftUI_UurroosterApp.swift in Sources */,
 				3EB487FE2B74C93F00F86F20 /* Event.swift in Sources */,
+				3E3887C82B7620B50072D844 /* TimeTableEventView.swift in Sources */,
+				3E3887CE2B7625EC0072D844 /* TimeTableTableView.swift in Sources */,
+				3E3887CA2B7623080072D844 /* TimeTableColumnHeaderView.swift in Sources */,
 				3EB487FA2B74C31300F86F20 /* DateUtils.swift in Sources */,
 				3EB488002B75177A00F86F20 /* TimeTableLayoutState.swift in Sources */,
 				3EB487FC2B74C90D00F86F20 /* MockupEventAPI.swift in Sources */,
@@ -204,6 +219,7 @@
 				3E8A94622B7237E6004FC6EC /* ContentView.swift in Sources */,
 				3EBDC6342B712FB6002B9800 /* InfiniteView.swift in Sources */,
 				3EB488022B7517AA00F86F20 /* TimeTableEventState.swift in Sources */,
+				3E3887CC2B7624460072D844 /* TimeTableRowHeaderView.swift in Sources */,
 				3EB487F82B74C27000F86F20 /* TimeTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,6 +350,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI-Uurrooster/Preview Content\"";
+				DEVELOPMENT_TEAM = TQQ345YR78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -370,6 +387,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI-Uurrooster/Preview Content\"";
+				DEVELOPMENT_TEAM = TQQ345YR78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
