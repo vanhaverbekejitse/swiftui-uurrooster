@@ -22,7 +22,7 @@ struct TimeTableTableView: View {
                                 ForEach(0..<layoutState.hours, id: \.self) { row in
                                     Text("")
                                         .frame(width: layoutState.cellWidth, height: layoutState.cellHeight)
-                                        .border(Color.gray)
+                                        .border(Color(UIColor.lightGray))
                                         .id("\(row)_\(column)")
                                 }
                             }
@@ -39,6 +39,9 @@ struct TimeTableTableView: View {
                             }
                         }
                     }
+                    .onAppear {
+                        //cellProxy.scrollTo("7_1", anchor: .topLeading)
+                    }
                 }
                 .background( GeometryReader { geo in
                     Color.clear
@@ -47,16 +50,14 @@ struct TimeTableTableView: View {
                 .onPreferenceChange(ViewOffsetKey.self) { value in
                     if value.x >= layoutState.getLeftXLoadingOffset() {
                         eventState.loadEarlierDates()
-                        //cellProxy.scrollTo("18_2")
                     }
-                    else if value.x <= layoutState.getRightXLoadingOffset() {
+                    else if value.x <= layoutState.getRightXLoadingOffset(loadedDaysAmount: eventState.dates.count) {
                         eventState.loadLaterDates()
-                        //cellProxy.scrollTo("18_1")
                     }
-                    layoutState.offset = value  // de rows en headers meescrollen
+                    layoutState.offset = value  // de headers meescrollen
                 }
                 .onAppear {
-                    cellProxy.scrollTo("18_2")
+                    cellProxy.scrollTo("7_1", anchor: .topLeading)  // verwijderen later
                 }
             }
         }

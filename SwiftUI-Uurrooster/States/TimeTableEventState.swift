@@ -12,7 +12,7 @@ import Foundation
 class TimeTableEventState {
     var dates: [Date] = []
     var isLoading = false
-    let loadingDelay = 0.5
+    let loadingDelay = 0.4
     let loadedEarlierDaysAmount = 1
     let loadedLaterDaysAmount = 2
     let api = MockupEventAPI()

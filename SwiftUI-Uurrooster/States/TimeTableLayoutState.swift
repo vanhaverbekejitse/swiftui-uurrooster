@@ -25,11 +25,11 @@ class TimeTableLayoutState {
     }
     
     func getLeftXLoadingOffset() -> Double {
-        return 0.0
+        return 0.0 - cellWidth
     }
     
-    func getRightXLoadingOffset() -> Double {
-        return cellWidth * -2
+    func getRightXLoadingOffset(loadedDaysAmount: Int) -> Double {
+        return cellWidth * (Double(loadedDaysAmount) - 2 - 1) * -1
     }
     
     func getRowsHeaderYOffset() -> Double {
@@ -45,8 +45,7 @@ class TimeTableLayoutState {
     }
     
     func getEventYOffset(event: EventLayout) -> Double {
-        // -12 want offset y=0 is in het midden
-        return (DateUtils.getEventStartTimeInHours(event: event.event) - 12) * (cellHeight) + (getEventHeight(event: event) / 2)
+        return getHourYOffset(hours: DateUtils.getEventStartTimeInHours(event: event.event), height: getEventHeight(event: event))
     }
     
     func getEventXOffset(event: EventLayout) -> Double {
@@ -58,6 +57,7 @@ class TimeTableLayoutState {
     }
     
     func getHourYOffset(hours: Double, height: Double) -> Double {
-        return hours * (cellHeight) + (height / 2)
+        // -12 want offset y=0 is in het midden
+        return (hours - 12) * (cellHeight) + (height / 2)
     }
 }
