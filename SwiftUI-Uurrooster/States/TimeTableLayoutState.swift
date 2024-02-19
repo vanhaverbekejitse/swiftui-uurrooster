@@ -12,7 +12,7 @@ import Foundation
 class TimeTableLayoutState {
     let hours = 24
     let cellHeight = 60.0
-    let rowHeaderWidth = 50.0
+    let rowHeaderWidth = 30.0
     let columnHeaderHeight = 50.0
     let screenPadding = 10.0
     let timeIndicatorHeight = 2.0

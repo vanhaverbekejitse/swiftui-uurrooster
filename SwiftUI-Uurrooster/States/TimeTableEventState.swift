@@ -12,7 +12,8 @@ import Foundation
 class TimeTableEventState {
     var dates: [Date] = []
     var isLoading = false
-    let loadingDelay = 0.4
+    //var resetXPosition = false
+    let loadingDelay = 0.3
     let loadedEarlierDaysAmount = 1
     let loadedLaterDaysAmount = 2
     let api = MockupEventAPI()
@@ -29,7 +30,7 @@ class TimeTableEventState {
         }
     }
     
-    func loadLaterDates() {
+    func loadLaterDates() async {
         if !isLoading {
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + loadingDelay) {
@@ -37,12 +38,13 @@ class TimeTableEventState {
                     self.addLaterDate()
                     //self.dates.removeFirst()
                 }
+                //self.resetXPosition = false
                 self.isLoading = false
             }
         }
     }
     
-    func loadEarlierDates() {
+    func loadEarlierDates() async {
         if !isLoading {
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + loadingDelay) {
@@ -50,6 +52,7 @@ class TimeTableEventState {
                     self.addEarlierDate()
                     //self.dates.removeLast()
                 }
+                //self.resetXPosition = false
                 self.isLoading = false
             }
         }
@@ -94,7 +97,7 @@ class TimeTableEventState {
     }
     
     // NIET AF
-    func getEventsWithBetterSize(date: Date) -> [EventLayout] {
+    /*func getEventsWithBetterSize(date: Date) -> [EventLayout] {
         let events = api.getEventsOnDay(date: date).map { event in
             return EventLayout(event: event)
         }
@@ -140,7 +143,7 @@ class TimeTableEventState {
         }
         cellEvents.append(contentsOf: bundeledEvents)
         return cellEvents
-    }
+    }*/
 }
 
 class EventLayout: Identifiable {

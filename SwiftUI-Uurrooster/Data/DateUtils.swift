@@ -9,7 +9,8 @@ import Foundation
 
 class DateUtils {
     class func intToTimetableHour(hour: Int) -> String {
-        return String(format: "%02d:00", hour)
+        //return String(format: "%02d:00", hour)
+        return String(format: "%02d", hour)
     }
     
     class func formatTimeTableDate(date: Date) -> String {

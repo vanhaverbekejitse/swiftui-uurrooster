@@ -40,7 +40,7 @@ struct TimeTableTableView: View {
                         }
                     }
                     .onAppear {
-                        //cellProxy.scrollTo("7_2", anchor: .topLeading)
+                        cellProxy.scrollTo("7_2", anchor: .topLeading)
                     }
                 }
                 .background( GeometryReader { geo in
@@ -48,19 +48,34 @@ struct TimeTableTableView: View {
                         .preference(key: ViewOffsetKey.self, value: geo.frame(in: .named("scroll")).origin)
                 })
                 .onPreferenceChange(ViewOffsetKey.self) { value in
-                    if value.x >= layoutState.getLeftXLoadingOffset() {
-                        eventState.loadEarlierDates()
-                        //cellProxy.scrollTo("7_2", anchor: .topLeading)
+                    if !eventState.isLoading {
+                        if value.x >= layoutState.getLeftXLoadingOffset() {
+                            Task.init {
+                                await eventState.loadEarlierDates()
+                                //cellProxy.scrollTo("7_1", anchor: .topLeading)
+                                layoutState.offset = value
+                            }
+                        }
+                        else if value.x <= layoutState.getRightXLoadingOffset(loadedDaysAmount: eventState.dates.count) {
+                            Task.init {
+                                await eventState.loadLaterDates()
+                                //cellProxy.scrollTo("7_1", anchor: .topLeading)
+                                layoutState.offset = value
+                            }
+                        }
                     }
-                    else if value.x <= layoutState.getRightXLoadingOffset(loadedDaysAmount: eventState.dates.count) {
-                        eventState.loadLaterDates()
-                    }
+                    /*if eventState.resetXPosition == true {
+                        cellProxy.scrollTo("7_1", anchor: .topLeading)
+                        eventState.resetXPosition = false
+                    }*/
                     layoutState.offset = value  // de headers meescrollen
                 }
                 .onAppear {
                     cellProxy.scrollTo("7_1", anchor: .topLeading)  // verwijderen later
                 }
-            }
+                .scrollTargetLayout()
+            }.scrollDisabled(eventState.isLoading)
+                .scrollTargetBehavior(.viewAligned)
         }
     }
     
