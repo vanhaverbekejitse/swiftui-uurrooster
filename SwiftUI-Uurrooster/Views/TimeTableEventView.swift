@@ -29,7 +29,7 @@ struct TimeTableEventView: View {
         .background(
             Rectangle()
                 .fill(Color.red)
-                .padding([.bottom, .trailing], 3)
+                .padding([.bottom, .trailing], layoutState.eventMargin)
         )
         .offset(x: eventXOffset, y: eventYOffset)
     }

@@ -16,6 +16,9 @@ class TimeTableLayoutState {
     let columnHeaderHeight = 50.0
     let screenPadding = 10.0
     let timeIndicatorHeight = 2.0
+    let arrowWidth = 30.0
+    let arrowHeight = 30.0
+    let eventMargin = 4.0
     
     var cellWidth = 140.0
     var offset = CGPoint.zero
@@ -24,13 +27,13 @@ class TimeTableLayoutState {
         cellWidth = (screenSize.width - rowHeaderWidth - screenPadding * 2) / 2
     }
     
-    func getLeftXLoadingOffset() -> Double {
+    /*func getLeftXLoadingOffset() -> Double {
         return 0.0 //- cellWidth
     }
     
     func getRightXLoadingOffset(loadedDaysAmount: Int) -> Double {
         return cellWidth * (Double(loadedDaysAmount) - 2 /*- 1*/) * -1
-    }
+    }*/
     
     func getRowsHeaderYOffset() -> Double {
         return offset.y + cellHeight / 2

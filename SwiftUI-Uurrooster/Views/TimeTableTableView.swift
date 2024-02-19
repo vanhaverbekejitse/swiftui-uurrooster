@@ -13,7 +13,7 @@ struct TimeTableTableView: View {
     
     var body: some View {
         ScrollViewReader { cellProxy in
-            ScrollView([.vertical, .horizontal], showsIndicators: false) {
+            ScrollView(.vertical, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 0) {
                     ForEach(Array(zip(eventState.dates.indices, eventState.dates)), id: \.0) { column, date in
                         ZStack(alignment: .leading) {
@@ -39,35 +39,12 @@ struct TimeTableTableView: View {
                             }
                         }
                     }
-                    .onAppear {
-                        cellProxy.scrollTo("7_2", anchor: .topLeading)
-                    }
                 }
                 .background( GeometryReader { geo in
                     Color.clear
                         .preference(key: ViewOffsetKey.self, value: geo.frame(in: .named("scroll")).origin)
                 })
                 .onPreferenceChange(ViewOffsetKey.self) { value in
-                    if !eventState.isLoading {
-                        if value.x >= layoutState.getLeftXLoadingOffset() {
-                            Task.init {
-                                await eventState.loadEarlierDates()
-                                //cellProxy.scrollTo("7_1", anchor: .topLeading)
-                                layoutState.offset = value
-                            }
-                        }
-                        else if value.x <= layoutState.getRightXLoadingOffset(loadedDaysAmount: eventState.dates.count) {
-                            Task.init {
-                                await eventState.loadLaterDates()
-                                //cellProxy.scrollTo("7_1", anchor: .topLeading)
-                                layoutState.offset = value
-                            }
-                        }
-                    }
-                    /*if eventState.resetXPosition == true {
-                        cellProxy.scrollTo("7_1", anchor: .topLeading)
-                        eventState.resetXPosition = false
-                    }*/
                     layoutState.offset = value  // de headers meescrollen
                 }
                 .onAppear {
@@ -76,7 +53,7 @@ struct TimeTableTableView: View {
                 .scrollTargetLayout()
             }.scrollDisabled(eventState.isLoading)
                 .scrollTargetBehavior(.viewAligned)
-        }
+        }.border(Color(UIColor.lightGray))
     }
     
     struct ViewOffsetKey: PreferenceKey {

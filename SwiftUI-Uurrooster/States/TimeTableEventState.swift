@@ -12,10 +12,9 @@ import Foundation
 class TimeTableEventState {
     var dates: [Date] = []
     var isLoading = false
-    //var resetXPosition = false
-    let loadingDelay = 0.3
-    let loadedEarlierDaysAmount = 1
-    let loadedLaterDaysAmount = 2
+    let loadingDelay = 0.0
+    let loadedEarlierDaysAmount = 0
+    let loadedLaterDaysAmount = 1
     let api = MockupEventAPI()
     var events: [Event]
     
@@ -30,29 +29,27 @@ class TimeTableEventState {
         }
     }
     
-    func loadLaterDates() async {
+    func loadLaterDates() {
         if !isLoading {
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + loadingDelay) {
                 for _ in 0..<1 {
                     self.addLaterDate()
-                    //self.dates.removeFirst()
+                    self.dates.removeFirst()
                 }
-                //self.resetXPosition = false
                 self.isLoading = false
             }
         }
     }
     
-    func loadEarlierDates() async {
+    func loadEarlierDates() {
         if !isLoading {
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + loadingDelay) {
                 for _ in 0..<1 {
                     self.addEarlierDate()
-                    //self.dates.removeLast()
+                    self.dates.removeLast()
                 }
-                //self.resetXPosition = false
                 self.isLoading = false
             }
         }
@@ -70,7 +67,8 @@ class TimeTableEventState {
         return api.getEventsOnDay(date: date)
     }
     
-    func getEventsWithSize(date: Date) -> [EventLayout] {
+    // OUD
+    /*func getEventsWithSize(date: Date) -> [EventLayout] {
         let events = api.getEventsOnDay(date: date).map { event in
             return EventLayout(event: event)
         }
@@ -94,10 +92,9 @@ class TimeTableEventState {
         }
         cellEvents.append(contentsOf: overlappingEvents)
         return cellEvents
-    }
+    }*/
     
-    // NIET AF
-    /*func getEventsWithBetterSize(date: Date) -> [EventLayout] {
+    func getEventsWithSize(date: Date) -> [EventLayout] {
         let events = api.getEventsOnDay(date: date).map { event in
             return EventLayout(event: event)
         }
@@ -107,13 +104,12 @@ class TimeTableEventState {
         var bundelWidth = 0
         for event in events {
             if (overlappingEvents.contains { overlappingEvent in
-                return event.startTime < overlappingEvent.endTime
+                return event.overlapsWithEvent(event: overlappingEvent)
             }) {
                 var i = 0
                 var spotFound = false
                 while i < overlappingEvents.count && !spotFound {
-                    if event.startTime < overlappingEvents[i].endTime {
-                        bundeledEvents.append(overlappingEvents[i])
+                    if !event.overlapsWithEvent(event: overlappingEvents[i]) {
                         overlappingEvents.remove(at: i)
                         event.position = i
                         spotFound = true
@@ -134,8 +130,9 @@ class TimeTableEventState {
                     bundeledEvent.overlappingEventsAmount = bundelWidth
                 }
                 cellEvents.append(contentsOf: bundeledEvents)
+                bundeledEvents = [event]
                 overlappingEvents = [event]
-                bundelWidth = 0
+                bundelWidth = 1
             }
         }
         for bundeledEvent in bundeledEvents {
@@ -143,7 +140,7 @@ class TimeTableEventState {
         }
         cellEvents.append(contentsOf: bundeledEvents)
         return cellEvents
-    }*/
+    }
 }
 
 class EventLayout: Identifiable {
@@ -161,5 +158,9 @@ class EventLayout: Identifiable {
     
     func incrementSimultaniousEvents() {
         overlappingEventsAmount += 1
+    }
+    
+    func overlapsWithEvent(event: EventLayout) -> Bool {
+        return startTime < event.endTime
     }
 }
